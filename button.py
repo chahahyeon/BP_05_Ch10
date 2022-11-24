@@ -62,40 +62,47 @@ b3.grid(row=2, column=2)
 window.mainloop()
 
 #3번문제
-rom tkinter import*
+
 import random
-window=Tk()
-r=random.randint(0,100)
-total=0
-a=0
-def c1():             #게임 룰 함수 정의
-b=int(e1.get())
-if b==r:
-l1["text"]="정답입니다!"
-elif b>r:
-l1["text"]="너무 높아요!"
-else:
-l1["text"]="너무 낮아요!"
+from tkinter import *
 
+window = Tk()
+secret_number = random.randint(1, 100)
+guess = None
+num_guesses = 0
 
-def c2():            #초기화 함수 정의
-global r
-r=random.randint(0,100)
-return
+def guess_number():
+  global num_guesses
+  guess = int(entry.get())
+  num_guesses += 1
+  if guess == secret_number:
+    message = "축하합니다!!"
+  elif guess < secret_number:
+    message = "너무 낮아요!!"
+  else:
+    message = "너무 높아요!!"
+  label['text']= message
 
-#상단 라벨 생성
-l1= Label(window,text="즐거운 숫자 게임")
-l1.grid(row=0,column=0)
+def reset():
+  global num_guesses
+  entry.delete(0, END)
+  secret_number = random.randint(1, 100)
+  guess = 0
+  num_guesses = 0
+  message = "1부터 100사이의 숫자를 추측하시오"
+  label['text']= message
 
+message = "1부터 100사이의 숫자를 추측하시오"
+label = Label(window, text=message)
+entry = Entry(window)
 
-e1=Entry(window)
-e1.grid(row=1)
+guess_button = Button(window, text="숫자를 입력", command=guess_number)
+reset_button = Button(window, text="게임을 다시 실행", command=reset)
 
-#하단 버튼 생성
-b1=Button(window,text="숫자를 입력",command=c1)
-b2=Button(window,text="게임을 다시시작",command=c2)
-b1.grid(row=2,column=0)
-b2.grid(row=2,column=1)
+label.grid(row=0, column=0, columnspan=2, sticky=W+E)
+entry.grid(row=1, column=0, columnspan=2, sticky=W+E)
+guess_button.grid(row=2, column=0)
+reset_button.grid(row=2, column=1)
 
 
 window.mainloop()
@@ -130,3 +137,88 @@ b = Button(window, text="변환!", command=convert)             #이 버튼을 �
 b.grid(row=3, column=1)
 
 window.mainloop()
+
+
+
+#5번
+
+from tkinter import*
+
+
+window=Tk()
+#상단 라벨 생성
+l1= Label(window,text="이름")
+l2= Label(window,text="직업")
+l3= Label(window,text="국적")
+
+
+# 격자배열을 통해 1행에 배치
+l1.grid(row=0,column=0)
+l2.grid(row=1,column=0)
+l3.grid(row=2,column=0)
+
+
+#입력부분 생성
+e1=Entry(window)
+e2=Entry(window)
+e3=Entry(window)
+
+
+# 격자배열을 통해 2행에 배치
+e1.grid(row=0,column=1)
+e2.grid(row=1,column=1)
+e3.grid(row=2,column=1)
+
+
+#하단 버튼 생성
+b1=Button(window,text="Show")
+b2=Button(window,text="Quit")
+
+
+# 격자배열을 통해 3열에 배치
+b1.grid(row=3,column=0)
+b2.grid(row=3,column=1)
+
+
+window.mainloop()
+
+
+
+#6번
+from random import *
+from tkinter import *
+# 선택 하는 부분
+def user_choice_rock():
+ user_choice = "rock"
+ turn(user_choice)
+ user_image.configure(image=rock_image)
+def user_choice_paper():
+ user_choice = "paper"
+ turn(user_choice)
+ user_image.configure(image=paper_image)
+def user_choice_scissors():
+ user_choice = "scissors"
+ turn(user_choice)
+ user_image.configure(image=scissors_image)
+# 게임부분
+def turn(user_choice):
+ oppo = ['rock', 'paper', 'scissors']
+ oppo_choice=oppo[randint(0,2)]
+ if(oppo_choice=='rock'):
+ oppo_image.configure(image=rock_image)
+ if(user_choice=='paper'):
+ turn_result.configure(text="사용자 승!", fg="green")
+ compare.configure(text=">>>>>")
+ elif(user_choice=='scissors'):
+ turn_result.configure(text="컴퓨터 승!", fg="red")
+ compare.configure(text="<<<<<")
+ else:
+ turn_result.configure(text="무승부", fg="gray")
+ compare.configure(text="=====")
+
+ elif(oppo_choice=='paper'):
+ oppo_image.configure(image=paper_image)
+ if(user_choice=='scissors'):
+ turn_result.configure(text="사용자 승!", fg="green")
+ compare.configure(text=">>>>>")
+ elif(user_choice=='rock'):
